@@ -33,8 +33,7 @@ Data ordered by several persons or multiple times by one person is shown with gr
 Tool which gets and adjusts quotas. Rules to be documented (basically, it rounds up usage after adding a safety margin, and sets a minimum default quota different for users and admins).
 
 This tool has parameters:
-| Parameter | Description                                             |
-|-----------|---------------------------------------------------------|
-| -v        | Verbose mode, strongly recommended.                     |
-| --dry-run | Perform a _dry-run_, i.e. only show what would be done. |
-|           | Strongly recommended before applying changes.           |
+| Parameter | Description                                                                                           |
+|-----------|-------------------------------------------------------------------------------------------------------|
+| -v        | Verbose mode, strongly recommended.                                                                   |
+| --dry-run | Perform a _dry-run_, i.e. only show what would be done. Strongly recommended before applying changes. |
