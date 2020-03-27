@@ -1,0 +1,10 @@
+setup-rucio() {
+	voms-proxy-info -exists > /dev/null 2>&1
+	if [ $? -eq 1 ]; then
+		if [ -z "$X509_USER_PROXY" ]; then
+			unset X509_USER_PROXY
+		fi
+		voms-proxy-init -voms atlas:/atlas/de
+	fi
+	export X509_USER_PROXY=$(voms-proxy-info -path)
+}
