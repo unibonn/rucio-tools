@@ -37,3 +37,6 @@ This tool has parameters:
 |-----------|-------------------------------------------------------------------------------------------------------|
 | -v        | Verbose mode, strongly recommended.                                                                   |
 | --dry-run | Perform a _dry-run_, i.e. only show what would be done. Strongly recommended before applying changes. |
+
+### `check_cloud_users.py`
+Simple tool cross-checking whether users not in a cloud have quota on an RSE and users in a cloud are missing quota on an RSE (to cross-check e.g. LOCALGROUPDISK quotas).
