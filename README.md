@@ -23,11 +23,23 @@ The usage and quota are measured in the same way, i.e. if multiple people order 
 ### `pleiades_quick.sh`
 Tool to extract the data also shown at on the [Pleiades Monitor](https://localgroupdisk.pleiades.uni-wuppertal.de/). Output like:
 ```
-Accounts           Space
-cernid             69.316
-cernid,cernid      44.992
+Accounts           Space total  Space persistent  Space temporary
+cernid             69.316       69.316            0.000
+cernid,cernid      44.992       24.992            20.000
 ```
 Data ordered by several persons or multiple times by one person is shown with grouped CERN IDs, so this does not match the Rucio quota calculation, but the sum of the sizes should match the total storage consumption.
+Note that `persistent` relates to data placed by rules which do not have an expiration set, while `temporary` relates to data placed by rules with expiration. See [this PR](https://github.com/rucio/rucio/issues/4983) for details.
+
+### `pleiades_csv.sh`
+Same as `pleiades_quick.sh`, but creates a simple CSV output with the cokumns:
+```
+Accounts;Space persistent;Space temporary
+```
+for cunsmption by other tools. Can e.g. be visualized with `pleiades.html`.
+
+### `pleiades.html`
+Read a CSV file produced e.g. by `pleiades_csv.sh` and displays it graphically via Javascript.
+Can be inspected via GitHub pages [here](https://unibonn.github.io/rucio-tools/pleiades.html).
 
 ### `get_and_adjust_quotas.py`
 Tool which gets and adjusts quotas. Rules to be documented (basically, it rounds up usage after adding a safety margin, and sets a minimum default quota different for users and admins).
