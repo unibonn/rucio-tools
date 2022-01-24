@@ -1,0 +1,44 @@
+name: Fetch and preprocess Rucio dump for Pleiades view
+
+on: 
+  - push
+  - workflow_dispatch
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install egi-igtf certificates
+        run: |
+          sudo mkdir -p /etc/grid-security/certificates
+          cd /etc/grid-security/certificates
+          for TYP in {classic,iota,mics,slcs}; do
+            wget "http://repository.egi.eu/sw/production/cas/1/current/tgz/igtf-preinstalled-bundle-${TYP}.tar.gz" -O - | sudo tar xzf -
+          done
+          cd
+          echo "Installed certificates:"
+          find /etc/grid-security/certificates
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Fetch and process Rucio dump
+        run: |
+          ./pleiades_csv.sh > pleiades.csv
+          echo "Created pleiades.csv with content:"
+          cat pleiades.csv
+
+      - name: Prepare page directory structure
+        run: |
+          mkdir gh-page
+          touch gh-page/.nojekyll
+          cp pleiades.html pleiades.csv gh-page/
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: endsWith(github.event.ref, '/master')
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./gh-page
+          force_orphan: true
