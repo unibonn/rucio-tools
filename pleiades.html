@@ -1,0 +1,53 @@
+<html>
+<body>
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+<script>
+var ctx = document.getElementById("myChart");
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        datasets: [{
+            type: 'bar',
+            backgroundColor: 'rgb(255, 99, 132)'
+        }, {
+            type: 'bar',
+            backgroundColor: 'rgb(10, 199, 32)'
+        }]
+    },
+    plugins: [ChartDataSource],
+    options: {
+        scales: {
+            xAxes: [{
+             stacked: true,
+             scaleLabel: {
+                display: true,
+                labelString: 'User Account'
+             }
+            }],
+            yAxes: [{
+             stacked: true,
+             scaleLabel: {
+                display: true,
+                labelString: 'Used Space'
+             }
+            }]
+        },
+        responsive: true,
+        plugins: {
+            datasource: {
+                url: 'pleiades.csv',
+                type: 'csv',
+                delimiter: ';',
+                rowMapping: 'index',
+                datasetLabels: true,
+                indexLabels: true
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
