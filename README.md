@@ -9,8 +9,10 @@ Most of them require a valid VOMS proxy certificate and correct environment setu
 
 ## Description
 
-### `setup-rucio`
+### `setup-rucio`, `rucio_homes`
 Function which can be used in your shell environment to get a VOMS proxy certificate and set up the `X509_USER_PROXY` environment variable correctly.
+It also sets up the Rucio home correctly, currently for the VOs ATLAS and BELLE.
+A `rucio_homes` directory is part of this repository with the configurations for these VOs. Note the differing `LICENSE` (see `COPYRIGHT`).
 
 ### `get_accs_usage.sh`
 Shell script massaging the output from `get_accs_usage.py` to produce output like:

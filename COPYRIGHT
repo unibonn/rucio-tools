@@ -1,0 +1,8 @@
+Files: *
+Copyright: 2020-2022, University of Bonn
+License: GPL-3+
+
+Files: rucio_homes/*/etc/rucio.cfg
+Copyright: 2013, Vincent Garonne
+           2022, University of Bonn
+License: Apache-2.0

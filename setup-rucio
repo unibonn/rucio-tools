@@ -1,10 +1,31 @@
-setup-rucio() {
+setup-rucio-atlas() {
+	export X509_USER_PROXY=/tmp/x509up_u$(id -u)_ATLAS
+	export RUCIO_HOME=~/rucio_homes/atlas
 	voms-proxy-info -exists > /dev/null 2>&1
-	if [ $? -eq 1 ]; then
-		if [ -z "$X509_USER_PROXY" ]; then
-			unset X509_USER_PROXY
-		fi
-		voms-proxy-init -voms atlas:/atlas/de
+	DOES_EXIST=$?
+	voms-proxy-info -acexists atlas > /dev/null 2>&1
+	HAS_VO=$?
+	if [ $DOES_EXIST -eq 1 -o $HAS_VO -eq 1 ]; then
+		#if [ -z "$X509_USER_PROXY" ]; then
+		#	unset X509_USER_PROXY
+		#fi
+		voms-proxy-init -voms atlas:/atlas/de -bits 2048 -rfc
+	fi
+	export X509_USER_PROXY=$(voms-proxy-info -path)
+}
+
+setup-rucio-belle() {
+	export X509_USER_PROXY=/tmp/x509up_u$(id -u)_BELLE
+	export RUCIO_HOME=~/rucio_homes/belle
+	voms-proxy-info -exists > /dev/null 2>&1
+	DOES_EXIST=$?
+	voms-proxy-info -acexists belle > /dev/null 2>&1
+	HAS_VO=$?
+	if [ $DOES_EXIST -eq 1 -o $HAS_VO -eq 1 ]; then
+		#if [ -z "$X509_USER_PROXY" ]; then
+		#	unset X509_USER_PROXY
+		#fi
+		voms-proxy-init -voms belle -bits 2048 -rfc
 	fi
 	export X509_USER_PROXY=$(voms-proxy-info -path)
 }
