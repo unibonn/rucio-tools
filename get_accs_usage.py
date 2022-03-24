@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-from __future__ import print_function
+#!/usr/bin/env python3
+
 from multiprocessing import Pool
 from rucio.client import Client
 from rucio.client.accountclient import AccountClient
@@ -21,7 +21,7 @@ pool = Pool(24)
 accdict = list(accclient.list_accounts(filters={'country-de' : 'user'})) + list(accclient.list_accounts(filters={'country-de' : 'admin'}))
 res = pool.map(get_usage, accdict)
 
-print("name","mail","identity","files","bytes","limit",sep="\t")
+print("name","mail","files","bytes","limit",sep="\t")
 for A in range(0,len(accdict)):
 	if res[A] and res[A]['bytes']!=0:
 		limit = accclient.get_local_account_limit(accdict[A]['account'], MY_RSE)
