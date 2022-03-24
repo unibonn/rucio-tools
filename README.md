@@ -22,6 +22,16 @@ cernid    max.example@cern.ch                       10652  120.728      170
 ```
 The usage and quota are measured in the same way, i.e. if multiple people order the same datasets, they will all get this accounted to their personal quota (but storage will only have the sata once). This means the sum of the sizes is usually larger than the total storage consumption.
 
+### `get_accs_usage2.sh`
+Shell script massaging the output from `get_accs_usage2.py` to produce output like:
+```
+name      mail                                      size/TB      perm/TB      temp/TB
+cernid    max.example@cern.ch                       79.4263      79.4263      0
+```
+The first column matches the total usage, derived from locks owned by the user to the configured RSE. The `perm` and `temp` columns are filled by checking for associated rules which target the given RSE, and summing up the bytes for rules which are `permanent` (i.e. `expires_at` is not set) and `temporary` (i.e. `expires_at` is set). This idea follows the approach outline in [this issue](https://github.com/rucio/rucio/issues/4983).
+
+Note that the first column is created by summarizing locks and the latter column is only filled if a matching rule targeting the RSE is found. This means that rules targeting an expression such as `(type=LOCALGROUPDISK)` may not be associated. For this reason, the first column does not have to match the sum of the latter two columns --- a mismatch indicates that an expression is used in the rule (or transfers are still ongoing).
+
 ### `pleiades_quick.sh`
 Tool to extract the data also shown at on the [Pleiades Monitor](https://localgroupdisk.pleiades.uni-wuppertal.de/). Output like:
 ```
