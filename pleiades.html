@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ <title>Pleiades</title>
+</head>
+<body>
+<div class="chart-container" style="position: relative; height:95vh; width:95vw">
+  <canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+<script>
+var ctx = document.getElementById("myChart");
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        datasets: [{
+            type: 'bar',
+            backgroundColor: 'rgb(255, 99, 132)'
+        }]
+    },
+    plugins: [ChartDataSource],
+    options: {
+        scales: {
+            xAxes: [{
+             stacked: true,
+             scaleLabel: {
+                display: true,
+                labelString: 'User Account'
+             }
+            }],
+            yAxes: [{
+             stacked: true,
+             scaleLabel: {
+                display: true,
+                labelString: 'Used Space / TB'
+             }
+            }]
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            datasource: {
+                url: 'pleiades.csv',
+                type: 'csv',
+                delimiter: ';',
+                rowMapping: 'index',
+                datasetLabels: true,
+                indexLabels: true
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
