@@ -35,7 +35,7 @@ jobs:
           cp pleiades.html pleiades.csv gh-page/
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: endsWith(github.event.ref, '/master')
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
