@@ -20,7 +20,7 @@ jobs:
           find /etc/grid-security/certificates
 
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Fetch and process Rucio dump
         run: |
